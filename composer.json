@@ -11,9 +11,24 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": "^5.6 || ^7.0",
-        "zendframework/zend-component-installer": "^1.0 || ^2.1",
-        "zendframework/zend-mvc": "^3.1.1",
-        "zfcampus/zf-development-mode": "^3.2"
+        "laminas/laminas-component-installer": "^1.0 || ^2.1",
+        "laminas/laminas-mvc": "^3.1.1",
+        "laminas/laminas-development-mode": "^3.2",
+        "laminas/laminas-db": "^2.11",
+        "laminas/laminas-session": "^2.9",
+        "laminas/laminas-mvc-console": "^1.2",
+        "laminas/laminas-filter": "^2.9",
+        "laminas/laminas-i18n": "^2.10",
+        "laminas/laminas-servicemanager-di": "^1.2",
+        "laminas/laminas-log": "^2.12",
+        "laminas/laminas-mvc-plugins": "^1.0",
+        "laminas/laminas-psr7bridge": "^1.2",
+        "firebase/php-jwt": "^5.2",
+        "laminas/laminas-cache": "^2.9",
+        "ext-iconv": "^0.0.0",
+        "ext-pdo": "^0.0.0",
+        "laminas/laminas-router": "^3.3",
+        "laminas/laminas-validator": "^2.12"
     },
     "autoload": {
         "psr-4": {
