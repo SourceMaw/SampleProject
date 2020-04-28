@@ -10,9 +10,9 @@ namespace Application\Controller;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class AdminController extends AbstractActionController
 {
-    public function indexAction()
+    public function dashboardAction()
     {
         return new ViewModel();
     }

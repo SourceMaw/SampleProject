@@ -15,22 +15,22 @@ return [
     'router' => [
         'routes' => [
             'login' => [
-                'type'    => Literal::class,
+                'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/',
+                    'route'    => '/login[/:action]',
                     'defaults' => [
                         'controller' => Controller\LoginController::class,
                         'action'     => 'index',
                     ],
                 ],
             ],
-            'application' => [
+            'admin' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/application[/:action]',
+                    'route'    => '/admin[/:action]',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
+                        'controller' => Controller\AdminController::class,
+                        'action'     => 'dashboard',
                     ],
                 ],
             ],
@@ -39,7 +39,8 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
-            Controller\LoginController::class => InvokableFactory::class
+            Controller\LoginController::class => InvokableFactory::class,
+            Controller\AdminController::class => InvokableFactory::class
         ],
     ],
     'view_manager' => [
