@@ -7,6 +7,7 @@
 
 namespace Application\Controller;
 
+use Laminas\Http\Header\SetCookie;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -17,33 +18,66 @@ class LoginController extends AbstractActionController
         $viewModel = new ViewModel();
         $viewModel->setTerminal(true);
 
+        $userSession = \App\Auth::getAuth();
+
+        if(!empty($userSession)){
+
+            header('Location: /admin');
+            exit;
+        }
+
+
         return $viewModel;
+    }
+
+    private function setCookie($name, $cookie, $expires = 30){
+
+        $cookie = new SetCookie('auth', $cookie, time() +$expires); // now + 30 sec
+        $headers = $this->getResponse()->getHeaders();
+        $headers->addHeader($cookie);
     }
 
     public function loginAction(){
 
-        $data = $this->params()->fromPost();
+        if($this->request->isPost()){
 
-        if(empty($data['email'])){
+            $params = $this->params()->fromPost();
 
-            echo 'The email field is empty';
-            exit;
-        } else if(empty($data['password'])){
+            if(!empty($params['email']) && !empty($params['password'])){
 
-            echo 'The password field is empty';
-            exit;
+                $auth = \App\Auth::auth($params['email'], $params['password']);
+
+                if(!empty($auth)){
+
+                    //set cookie
+                    $this->setCookie('auth', $auth);
+
+                    $this->redirect()->toUrl('/admin');
+                } else {
+
+                    echo "Wrong email or password!";
+                    exit;
+
+                }
+            } else {
+
+                echo "You must fill email and password";
+                exit;
+            }
+
         }
 
-        $serviceUser = new \Models\User();
-        $user = $serviceUser->getByEmailAndPassword($data['email'], $data['password']);
+        $cookie = $this->getRequest()->getCookie();
+        if (!empty($cookie) && !empty($cookie->offsetExists('auth'))) {
+            $auth =  $cookie->offsetGet('auth');
 
-        if(!empty($user)){
+            if( \App\Auth::authByJWT($auth)){
 
-            $this->redirect()->toUrl('/admin');
-        } else {
-
-            echo 'Wrong email or password';
-            exit;
+                $this->setCookie('auth', $auth);
+                $this->redirect()->toUrl('/admin');
+            }
         }
+
+
     }
 }

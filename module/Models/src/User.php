@@ -8,6 +8,9 @@ use Laminas\Db\Sql\Sql;
 
 class User extends Base{
 
+    const TYPE_MEMBER = 0;
+    CONST TYPE_ADMIN = 1;
+
     public $tableName = 'users';
     public $pkId = 'user_id';
 

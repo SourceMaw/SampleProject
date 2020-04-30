@@ -14,6 +14,14 @@ class AdminController extends AbstractActionController
 {
     public function dashboardAction()
     {
+        $userSession = \App\Auth::getAuth();
+
+        if(empty($userSession)){
+
+            header('Location: /login');
+            exit;
+        }
+
         return new ViewModel();
     }
 }

@@ -34,13 +34,24 @@ return [
                     ],
                 ],
             ],
+            'logout' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/logout[/:action]',
+                    'defaults' => [
+                        'controller' => Controller\LogOutController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\LoginController::class => InvokableFactory::class,
-            Controller\AdminController::class => InvokableFactory::class
+            Controller\AdminController::class => InvokableFactory::class,
+            Controller\LogOutController::class => InvokableFactory::class
         ],
     ],
     'view_manager' => [
