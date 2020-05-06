@@ -1,0 +1,72 @@
+<section>
+
+
+    <div class="container">
+        <form method="post" id="employeeForm">
+            <div class="card-title" style="padding: 40px;"><h3>Add Employee</h3></div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="position">Position</label>
+                <input type="text" class="form-control" id="position" name="position" aria-describedby="emailHelp" placeholder="Enter position">
+            </div>
+            <div class="form-group">
+                <label for="office">Office</label>
+                <input type="text" class="form-control" id="office" name="office" aria-describedby="emailHelp" placeholder="Enter office">
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" aria-describedby="emailHelp" placeholder="Enter age">
+            </div>
+            <div class="form-group">
+                <label for="salary">Salary</label>
+                <input type="number" class="form-control" id="salary" name="salary" aria-describedby="emailHelp" placeholder="Enter salary">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="addEmployee();" >Add Employee</button>
+        </form>
+    </div>
+
+
+</section>
+
+<script>
+
+    function addEmployee() {
+
+        $.ajax({
+
+            type : 'post',
+            data: $('#employeeForm').serialize(),
+            url : '/admin/addEmp',
+            success : function (r) {
+
+                if(r != 'done'){
+
+                    alert(r);
+                }
+                else {
+
+                    alert('Your employee has been added to account');
+                    document.getElementById('employeeForm').reset();
+
+                }
+            },
+            error : function() {
+
+                alert('Sorry, something has happen');
+                document.getElementById('employeeForm').reset();
+            }
+
+
+        })
+
+    }
+
+</script>
