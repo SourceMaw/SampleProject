@@ -61,4 +61,13 @@ class Employee extends Base{
         return $results;
     }
 
+    public function getAllEmployees(){
+
+        $select = $this->getSelectObject();
+
+
+        return $this->runQueryBuilt($select);
+
+    }
+
 }

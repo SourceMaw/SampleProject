@@ -25,7 +25,14 @@ class AdminController extends AbstractActionController
             exit;
         }
 
-        return new ViewModel();
+        $serviceEmployees = new Employee();
+        $employees = $serviceEmployees->getAllEmployees();
+
+        return new ViewModel([
+
+            'employees' => $employees
+
+        ]);
     }
 
     public function admininfoAction(){
