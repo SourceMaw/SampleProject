@@ -185,4 +185,57 @@ class AdminController extends AbstractActionController
         echo 'done';
         exit;
     }
+
+    public function deleteemployeeAction(){
+
+        $userSession = \App\Auth::getAuth();
+
+        if(empty($userSession)){
+
+            header('Location: /login');
+            exit;
+        }
+
+        $serviceEmployees = new Employee();
+        $employees = $serviceEmployees->getAllEmployees();
+
+        return new ViewModel([
+
+            'employees' => $employees
+
+        ]);
+    }
+
+    public function deleteEmpAction(){
+
+        $userSession = \App\Auth::getAuth();
+
+        if(empty($userSession)){
+
+            header('Location: /login');
+            exit;
+        }
+
+        $data = $this->params()->fromPost();
+
+        if(empty($data['employeeId'])){
+
+            die('Can not find id');
+        }
+
+        $serviceEmployee = new Employee();
+        $employee = $serviceEmployee->select($data['employeeId']);
+
+        if(empty($employee)){
+
+            die('Can not find employee');
+        }
+
+        $serviceEmployee->delete($data['employeeId']);
+
+
+        echo 'done';
+        exit;
+
+    }
 }

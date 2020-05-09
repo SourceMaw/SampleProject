@@ -1,0 +1,141 @@
+<section>
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Employees</h1>
+<!--        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>-->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Sample Project Company Employees</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Salary</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Salary</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+
+                        <?php  if(!empty($this->employees)){
+
+                            foreach ($this->employees as $employee){
+                                ?>
+
+                                <tr>
+                                    <td><?php echo $employee['emp_name'] ?></td>
+                                    <td><?php echo $employee['emp_position'] ?></td>
+                                    <td><?php echo $employee['emp_office'] ?></td>
+                                    <td><?php echo $employee['emp_age'] ?></td>
+                                    <td>$<?php echo $employee['emp_salary'] ?></td>
+                                    <td><?php echo $employee['emp_email'] ?></td>
+                                    <td><a href="javascript:" class="btn btn-danger" onclick="deleteEmployee('<?php echo $employee['emp_id'] ?>')">Delete</a></td>
+                                </tr>
+
+                                <?php
+                            }
+                        } ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+</section>
+
+<script>
+
+    function deleteEmployee(employeeId) {
+
+        let result = confirm("Are you sure you want to delete this employee?");
+
+        if(result) {
+
+            $.ajax({
+
+                type: 'post',
+                url: '/admin/deleteEmp',
+                data: {
+                    employeeId: employeeId,
+                },
+                success: function (r) {
+
+
+                    if(r != 'done'){
+
+                        alert(r);
+                    }
+                    else {
+
+                        alert('Your employee has been deleted');
+                        document.location.href = '/admin/delete-employee';
+
+                    }
+                },
+                error : function() {
+
+                    alert('Sorry, something has happen');
+                }
+
+                })
+        }
+
+    }
+
+</script>
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="../../design/vendor/jquery/jquery.min.js"></script>
+<script src="../../design/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="../../design/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="../../design/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="../../design/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../../design/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="../../design/js/demo/datatables-demo.js"></script>
+
+<!-- Custom fonts for this template -->
+<link href="../../design/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
+
+<!-- Custom styles for this page -->
+<link href="../../design/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
