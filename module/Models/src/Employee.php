@@ -61,6 +61,25 @@ class Employee extends Base{
         return $results;
     }
 
+    public function getEmployeeById($id){
+
+        $select = $this->getSelectObject();
+        $select->where(
+            [
+                'emp_id' => $id
+            ]
+        );
+
+        $results = $this->runQueryBuilt($select);
+
+        if(!empty($results[0])){
+
+            return $results[0];
+        }
+
+        return $results;
+    }
+
     public function getAllEmployees(){
 
         $select = $this->getSelectObject();

@@ -238,4 +238,132 @@ class AdminController extends AbstractActionController
         exit;
 
     }
+
+    public function updateemployeesAction(){
+
+        $userSession = \App\Auth::getAuth();
+
+        if(empty($userSession)){
+
+            header('Location: /login');
+            exit;
+        }
+
+        $serviceEmployees = new Employee();
+        $employees = $serviceEmployees->getAllEmployees();
+
+        return new ViewModel([
+
+            'employees' => $employees
+
+        ]);
+    }
+
+    public function updateEmployeeAction(){
+
+        $userSession = \App\Auth::getAuth();
+
+        if(empty($userSession)){
+
+            header('Location: /login');
+            exit;
+        }
+
+        $id = $this->params()->fromRoute('id', 0);
+
+        if(empty($id)){
+
+            die('Can not find id in route');
+        }
+
+        $serviceEmployee = new Employee();
+        $employee = $serviceEmployee->select($id);
+
+        return new ViewModel([
+
+            'employee' => $employee
+
+        ]);
+
+    }
+
+    public function updateEmpAction(){
+
+        $userSession = \App\Auth::getAuth();
+
+        if(empty($userSession)){
+
+            header('Location: /login');
+            exit;
+        }
+
+        $data = $this->params()->fromPost();
+        $id = $this->params()->fromRoute('id', 0);
+
+        if(empty($id)){
+
+            die('Can not find id');
+        }
+
+        if(empty($data['name'])) {
+
+            die('You need to fill the name');
+
+        } else if(empty($data['position'])){
+
+            die('You need to fill the position');
+
+        } else if(empty($data['office'])){
+
+            die('You need to fill the office');
+
+        } else if(empty($data['age'])){
+
+            die('You need to fill the age');
+
+        } else if(empty($data['salary'])){
+
+            die('You need to fill the salary');
+
+        } else if(empty($data['email'])){
+
+            die('You need to fill the email');
+
+        } else if(strlen($data['email']) > 100) {
+
+            die('The email must be maximum 100 characters long');
+
+        } else if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+
+            die('You need to fill a valid email');
+
+        }
+
+        $serviceEmployee = new Employee();
+        $employee = $serviceEmployee->getEmployeeById($id);
+
+        if(empty($employee)){
+
+            die('Can not find employee');
+        }
+
+        $fields = [
+
+            'emp_name' => $data['name'],
+            'emp_position' => $data['position'],
+            'emp_office' => $data['office'],
+            'emp_age' => $data['age'],
+            'emp_salary' => $data['salary'],
+            'emp_email' => $data['email']
+
+        ];
+
+        $serviceEmployee->update($fields, $id);
+
+
+        echo 'done';
+        exit;
+
+
+    }
 }
